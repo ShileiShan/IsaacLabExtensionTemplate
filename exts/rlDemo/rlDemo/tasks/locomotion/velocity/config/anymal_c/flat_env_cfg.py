@@ -36,6 +36,12 @@ class AnymalCFlatEnvCfg_PLAY(AnymalCFlatEnvCfg):
         # make a smaller scene for play
         self.scene.num_envs = 50
         self.scene.env_spacing = 2.5
+        self.scene.terrain.terrain_type = "usd"
+        # self.scene.terrain.usd_path = "omniverse://localhost/Users/SmallWarehouse.usd"
+        # self.scene.terrain.usd_path = "omniverse://localhost/Users/SimpleScene.usd"
+        self.scene.terrain.usd_path = "omniverse://localhost/Users/Collected_terrain02/terrain03.usd"
+        # self.scene.terrain.usd_path = "omniverse://localhost/Users/ground.usd"
+        self.scene.terrain.terrain_generator = None
         # disable randomization for play
         self.observations.policy.enable_corruption = False
         # remove random pushing event

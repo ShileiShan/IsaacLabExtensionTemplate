@@ -40,6 +40,8 @@ import rlDemo.tasks  # noqa: F401
 from omni.isaac.lab_tasks.utils import get_checkpoint_path, parse_env_cfg
 from omni.isaac.lab_tasks.utils.wrappers.rsl_rl import RslRlOnPolicyRunnerCfg, RslRlVecEnvWrapper, export_policy_as_onnx
 
+import carb.events
+import omni.kit.app
 
 def main():
     """Play with RSL-RL agent."""
@@ -70,20 +72,34 @@ def main():
     # export policy to onnx
     export_model_dir = os.path.join(os.path.dirname(resume_path), "exported")
     export_policy_as_onnx(ppo_runner.alg.actor_critic, export_model_dir, filename="policy.onnx")
-
+    MY_CUSTOM_EVENT = carb.events.type_from_string("robot_info")
+    MY_CUSTOM_EVENT2 = carb.events.type_from_string("robot_cmd")
+    def on_event_push(e):
+        print("push")
+        print(e.type, e.type == MY_CUSTOM_EVENT2, e.payload)
+    bus = omni.kit.app.get_app().get_message_bus_event_stream()
+    # sub1 = bus.create_subscription_to_push_by_type(MY_CUSTOM_EVENT, on_event_push)
     # reset environment
     obs, _ = env.get_observations()
     # simulate environment
+    delta = 0.01
+    vel = [1.0, 2.0, 3.0]
     while simulation_app.is_running():
         # run everything in inference mode
         with torch.inference_mode():
             # agent stepping
             actions = policy(obs)
             # env stepping
+            vel[0] = vel[0] + delta
+            bus.push(MY_CUSTOM_EVENT, payload={"vel": vel, "pos":[1.0,2.0,3.0]})
+            # print("vel", vel)
+            # payload = bus.pull(MY_CUSTOM_EVENT2)
+            # print("payload", payload)
             obs, _, _, _ = env.step(actions)
 
     # close the simulator
     env.close()
+
 
 
 if __name__ == "__main__":

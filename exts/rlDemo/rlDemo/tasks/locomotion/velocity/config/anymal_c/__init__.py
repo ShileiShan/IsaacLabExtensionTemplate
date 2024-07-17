@@ -12,7 +12,7 @@ from . import agents, flat_env_cfg, rough_env_cfg
 ##
 
 gym.register(
-    id="Isaac-Velocity-Flat-Anymal-C-v0",
+    id="Isaac-Velocity-Flat-Anymal-C-v0-Raygen",
     entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
     disable_env_checker=True,
     kwargs={
@@ -24,7 +24,7 @@ gym.register(
 )
 
 gym.register(
-    id="Isaac-Velocity-Flat-Anymal-C-Play-v0",
+    id="Isaac-Velocity-Flat-Anymal-C-Play-v0-Raygen",
     entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
     disable_env_checker=True,
     kwargs={
@@ -36,7 +36,7 @@ gym.register(
 )
 
 gym.register(
-    id="Isaac-Velocity-Rough-Anymal-C-v0",
+    id="Isaac-Velocity-Rough-Anymal-C-v0-Raygen",
     entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
     disable_env_checker=True,
     kwargs={
@@ -48,7 +48,7 @@ gym.register(
 )
 
 gym.register(
-    id="Isaac-Velocity-Rough-Anymal-C-Play-v0",
+    id="Isaac-Velocity-Rough-Anymal-C-Play-v0-Raygen",
     entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
     disable_env_checker=True,
     kwargs={

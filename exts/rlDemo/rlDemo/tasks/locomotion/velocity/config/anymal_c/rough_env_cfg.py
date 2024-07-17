@@ -33,12 +33,21 @@ class AnymalCRoughEnvCfg_PLAY(AnymalCRoughEnvCfg):
         self.scene.env_spacing = 2.5
         # spawn the robot randomly in the grid (instead of their terrain levels)
         self.scene.terrain.max_init_terrain_level = None
+        self.scene.terrain.terrain_generator = None
+        self.scene.terrain.terrain_type = "usd"
+        # self.scene.terrain.usd_path = "omniverse://localhost/Users/SimpleScene.usd"
+        self.commands.base_velocity.ranges.lin_vel_x = (1.0, 1.0)
+        self.commands.base_velocity.ranges.lin_vel_y = (0.0, 0.0)
+        self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
+        self.commands.base_velocity.ranges.heading = (0.0, 0.0)
+        self.scene.terrain.usd_path = "omniverse://localhost/Users/ground.usd"
         # reduce the number of terrains to save memory
         if self.scene.terrain.terrain_generator is not None:
             self.scene.terrain.terrain_generator.num_rows = 5
             self.scene.terrain.terrain_generator.num_cols = 5
             self.scene.terrain.terrain_generator.curriculum = False
-
+        # no terrain curriculum
+        self.curriculum.terrain_levels = None
         # disable randomization for play
         self.observations.policy.enable_corruption = False
         # remove random pushing event
